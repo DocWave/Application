@@ -1,0 +1,31 @@
+{
+  "name": "Doc-tor",
+  "version": "1.0.0",
+  "description": "JS Doc repository",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron main.js",
+    "package": "electron-packager . Doc-tor --platform=darwin --arch=x64 --version=0.36.4 --overwrite --prune"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lfox91/Doc-tor"
+  },
+  "keywords": [
+    "Electron",
+    "Documentation",
+    "Searchable",
+    "JavaScript"
+  ],
+  "author": "Dan Levin, Cruz Welborn, Lea Fox",
+  "license": "CC0-1.0",
+  "bugs": {
+    "url": "https://github.com/lfox91/Doc-tor/issues"
+  },
+  "homepage": "https://github.com/lfox91/Doc-tor#readme",
+  "devDependencies": {
+    "electron-debug": "^0.5.1",
+    "electron-packager": "^5.2.1",
+    "electron-prebuilt": "^0.36.0"
+  }
+}
