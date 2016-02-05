@@ -1,20 +1,20 @@
 {
-	"name": "Doc-tor",
-	"version": "1.0.0",
-	"description": "JS Doc repository",
-	"main": "main.js",
-	"scripts": {
-		"start": "electron main.js",
-		"package": "electron-packager . Doc-tor --platform=darwin --arch=x64 --version=0.36.4 --overwrite --prune",
+  "name": "Doc-tor",
+  "version": "1.0.0",
+  "description": "JS Doc repository",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron main.js",
+    "package": "electron-packager . Doc-tor --platform=darwin --arch=x64 --version=0.36.4 --overwrite --prune",
     "serv": "nodemon server/server.js",
     "start-dev": "npm run task",
     "task": "gulp"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/lfox91/Doc-tor"
-	},
-	"keywords": [
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lfox91/Doc-tor"
+  },
+  "keywords": [
     "Electron",
     "Documentation",
     "Searchable",
@@ -43,4 +43,5 @@
 		"vinyl-source-stream": "^1.1.0",
 		"browserify": "^10.2.4"
 	}
+
 }
