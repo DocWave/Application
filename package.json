@@ -5,7 +5,8 @@
 	"main": "main.js",
 	"scripts": {
 		"start": "electron main.js",
-		"package": "electron-packager . Doc-tor --platform=darwin --arch=x64 --version=0.36.4 --overwrite --prune"
+		"package": "electron-packager . Doc-tor --platform=darwin --arch=x64 --version=0.36.4 --overwrite --prune",
+    "serv": "nodemon server/server.js"
 	},
 	"repository": {
 		"type": "git",
@@ -16,12 +17,16 @@
     "Searchable",
     "JavaScript"
   ],
-	"author": "Dan Levin, Cruz Welborn, Lea Fox",
-	"license": "CC0-1.0",
-	"bugs": {
-		"url": "https://github.com/lfox91/Doc-tor/issues"
-	},
-	"homepage": "https://github.com/lfox91/Doc-tor#readme",
+  "author": "Dan Levin, Cruz Welborn, Lea Fox",
+  "license": "CC0-1.0",
+  "bugs": {
+    "url": "https://github.com/lfox91/Doc-tor/issues"
+  },
+  "homepage": "https://github.com/lfox91/Doc-tor#readme",
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "express": "^4.13.4"
+  },
 	"devDependencies": {
 		"electron-debug": "^0.5.1",
 		"electron-packager": "^5.2.1",
