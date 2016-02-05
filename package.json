@@ -5,16 +5,13 @@
 	"main": "main.js",
 	"scripts": {
 		"start": "electron main.js",
-		"package": "electron-packager . Doc-tor --platform=darwin --arch=x64 --version=0.36.4 --overwrite --prune",
-    "start-dev": "npm run task",
-    "task": "gulp"
+		"package": "electron-packager . Doc-tor --platform=darwin --arch=x64 --version=0.36.4 --overwrite --prune"
 	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/lfox91/Doc-tor"
 	},
 	"keywords": [
-    "Electron",
     "Documentation",
     "Searchable",
     "JavaScript"
