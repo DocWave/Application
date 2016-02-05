@@ -1,2 +1,8 @@
+# npm dependencies
 node_modules
+
+# packaged application (end-user)
 Doc-tor-darwin-x64
+
+# front-end build
+build
