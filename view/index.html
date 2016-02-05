@@ -1,0 +1,73 @@
+<html>
+
+	<head>
+		<title>Doc-tor</title>
+		<link rel="stylesheet" href="css/photon.css">
+		<link rel="stylesheet" href="css/normalize.css">
+	</head>
+
+	<body>
+		<!-- window is essentially the body, but utilizes flexbox -->
+		<div class="window">
+			<!-- Your app's content goes inside .window-content -->
+			<div class="window-content">
+				<div class="pane-group">
+					<!-- sidebar is... the sidebar -->
+					<div class="pane pane-sm sidebar">
+						<ul class="list-group">
+							<li class="list-group-header">
+								<input class="form-control" type="text" placeholder="Search for documentation">
+							</li>
+							<nav class="nav-group">
+								<!-- toolbar mixin from https://github.com/connors/photon/issues/14 -->
+								<!-- <label class="toolbar-input">
+								<span class="icon icon-search"></span>
+								<input type="search" class="form-control" placeholder="Search...">
+							</label> -->
+								<!-- nav-group-title -->
+								<h5 class="nav-group-title">Favorites</h5>
+								<span class="nav-group-item">
+                  <span class="icon icon-home"></span> Node
+								</span>
+								<span class="nav-group-item active">
+                  <span class="icon icon-light-up"></span> CSS3
+								</span>
+								<span class="nav-group-item">
+                  <span class="icon icon-download"></span> HTML5
+								</span>
+							</nav>
+							<nav class="nav-group">
+								<!-- nav-group-title -->
+								<h5 class="nav-group-title">Downloadable</h5>
+								<span class="nav-group-item">
+                  <span class="icon icon-home"></span> Electron
+								</span>
+							</nav>
+					</div>
+
+					<div class="pane">
+						<div class="tab-group">
+							<div class="tab-item active">
+								<span class="icon icon-cancel icon-close-tab"></span> Node
+							</div>
+							<div class="tab-item">
+								<span class="icon icon-cancel icon-close-tab"></span> CSS3
+							</div>
+							<div class="tab-item tab-item-fixed">
+								<span class="icon icon-plus"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- <footer class="toolbar toolbar-footer">
+				<div class="toolbar-actions">
+					<button class="btn btn-default">Cancel</button>
+					<button class="btn btn-primary pull-right">Save</button>
+				</div>
+			</footer> -->
+		</div>
+	</body>
+	<!-- <script src="build/bundle.js"></script> -->
+
+</html>
