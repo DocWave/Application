@@ -4,7 +4,6 @@ var babelify = require('babelify');
 var watchify = require('watchify');
 var source = require('vinyl-source-stream');
 var notify = require('gulp-notify');
-var nodemon = require('gulp-nodemon');
 
 function handleErrors() {
   var args = Array.prototype.slice.call(arguments);
