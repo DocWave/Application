@@ -1,5 +1,8 @@
 # npm dependencies
-node_modules
+node_modules/*
+
+#include edited version of website_scraper
+!node_modules/website-scraper
 
 # packaged application (end-user)
 Doc-tor-darwin-x64
