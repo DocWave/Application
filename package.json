@@ -5,8 +5,7 @@
   "main": "main.js",
   "scripts": {
     "start": "gulp & electron main.js",
-    "package": "electron-packager . Doc-tor --platform=darwin --arch=x64 --version=0.36.4 --overwrite --prune",
-    "serv": "nodemon server/server.js"
+    "package": "electron-packager . Doc-tor --platform=darwin --arch=x64 --version=0.36.4 --overwrite --prune"
   },
   "repository": {
     "type": "git",
@@ -37,7 +36,6 @@
     "electron-packager": "^5.2.1",
     "electron-prebuilt": "^0.36.0",
     "gulp": "^3.9.0",
-    "gulp-nodemon": "^2.0.6",
     "gulp-notify": "^2.2.0",
     "path": "^0.12.7",
     "react": "^0.14",
