@@ -57,6 +57,18 @@
 								<span class="icon icon-plus"></span>
 							</div>
 						</div>
+
+						<button id='testButton' style="border-radius: 15px; padding: 10px; background: #1A66ED; color: white; margin-left: 35%; margin-top: 25%">REQUEST DOCUMENTATION</button>
+						<script>
+							'use strict'
+							const request = require('request')
+							const testEndPoint = 'http://google.com'
+							let counter = 1;
+							document.getElementById('testButton').addEventListener('click', (event) => {
+								console.log(counter++, 'button clicked');
+								request(testEndPoint).pipe(require('fs').createWriteStream('docStorage/test'))
+							})
+						</script>
 					</div>
 				</div>
 			</div>
