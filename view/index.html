@@ -62,11 +62,14 @@
 						<script>
 							'use strict'
 							const request = require('request')
-							const testEndPoint = 'http://google.com'
+							const testURL = ''
+							const testEndPoint = 'http:/'+ testURL +':3000/node'
 							let counter = 1;
 							document.getElementById('testButton').addEventListener('click', (event) => {
 								console.log(counter++, 'button clicked');
-								request(testEndPoint).pipe(require('fs').createWriteStream('docStorage/test'))
+								request(testEndPoint).pipe(require('fs').createWriteStream('docStorage/test.zip'))
+								// TODO: figure out unzipping for later use.
+								// zlib.Unzip('docStorage/test.zip')
 							})
 						</script>
 					</div>
