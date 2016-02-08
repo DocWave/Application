@@ -15,7 +15,8 @@ function createWindow() {
 
 	let windowOptions = {
 		width: 800,
-		height: 600
+		height: 600,
+		"node-integration": "iframe", // and this line
 	}
 
 	mainWindow = new BrowserWindow(windowOptions);

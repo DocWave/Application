@@ -3,7 +3,6 @@
 	<head>
 		<title>Doc-tor</title>
 		<link rel="stylesheet" href="css/photon.css">
-		<link rel="stylesheet" href="css/normalize.css">
 	</head>
 
 	<body>
@@ -16,31 +15,26 @@
 					<div class="pane pane-sm sidebar">
 						<ul class="list-group">
 							<li class="list-group-header">
-								<input class="form-control" type="text" placeholder="Search for documentation">
+								<input class="form-control" type="text" placeholder="Search documentation">
 							</li>
 							<nav class="nav-group">
-								<!-- toolbar mixin from https://github.com/connors/photon/issues/14 -->
-								<!-- <label class="toolbar-input">
-								<span class="icon icon-search"></span>
-								<input type="search" class="form-control" placeholder="Search...">
-							</label> -->
 								<!-- nav-group-title -->
 								<h5 class="nav-group-title">Favorites</h5>
-								<span class="nav-group-item">
-                  <span class="icon icon-home"></span> Node
-								</span>
 								<span class="nav-group-item active">
-                  <span class="icon icon-light-up"></span> CSS3
+                  <span class="icon icon-right-dir"></span> Node
 								</span>
 								<span class="nav-group-item">
-                  <span class="icon icon-download"></span> HTML5
+                  <span class="icon icon-right-dir"></span> CSS3
+								</span>
+								<span class="nav-group-item">
+                  <span class="icon icon-right-dir"></span> HTML5
 								</span>
 							</nav>
 							<nav class="nav-group">
 								<!-- nav-group-title -->
 								<h5 class="nav-group-title">Downloadable</h5>
 								<span class="nav-group-item">
-                  <span class="icon icon-home"></span> Electron
+                  <span class="icon icon-down-dir"></span> Electron
 								</span>
 							</nav>
 					</div>
@@ -58,17 +52,13 @@
 							</div>
 						</div>
 
-						<button id='testButton' style="border-radius: 15px; padding: 10px; background: #1A66ED; color: white; margin-left: 35%; margin-top: 25%">REQUEST DOCUMENTATION</button>
-						<script>
-							'use strict'
-							const request = require('request')
-							const testEndPoint = 'http://google.com'
-							let counter = 1;
-							document.getElementById('testButton').addEventListener('click', (event) => {
-								console.log(counter++, 'button clicked');
-								request(testEndPoint).pipe(require('fs').createWriteStream('docStorage/test'))
-							})
-						</script>
+						<iframe src="../docStorage/node.docs/documents/cluster.html" name="targetframe" height="100%" width="100%">
+    				</iframe>
+
+
+						<!-- <button id='request' style="border-radius: 15px; padding: 10px; background: #1A66ED; color: white; margin-left: 35%; margin-top: 25%">REQUEST </button>
+						<button id='unzip' style="border-radius: 15px; padding: 10px; background: #1A66ED; color: white; margin-left: 35%; margin-top: 25%">UNZIP</button> -->
+
 					</div>
 				</div>
 			</div>
@@ -81,5 +71,62 @@
 		</div>
 	</body>
 	<!-- <script src="build/bundle.js"></script> -->
+
+	<script>
+		'use strict'
+		const path = require("path");
+		const fs = require('fs')
+		const request = require('request')
+		const yauzl = require("yauzl");
+		const mkdirp = require("mkdirp");
+
+		const testURL = '192.168.1.18'
+		const testEndPoint = 'http://' + testURL + ':3000/node/'
+
+		document.getElementById('request').addEventListener('click', (event) => {
+			console.log('start request');
+			request(testEndPoint).pipe(fs.createWriteStream('docStorage/node.zip'))
+		})
+
+		document.getElementById('unzip').addEventListener('click', (event) => {
+			console.log('starting unzipping');
+			let file = 'docStorage/node.zip';
+			let location = 'docStorage/';
+			//unzip the folder and place it somewhere
+			unZipThisFile(file, location)
+		})
+
+		// function to unzip and place file somewhere
+		function unZipThisFile(fileToUnzip, locationToPlaceUnZippedFiles) {
+			yauzl.open(fileToUnzip, {
+				lazyEntries: true
+			}, function(err, zipfile) {
+				if (err) throw err;
+				zipfile.readEntry();
+				zipfile.on("entry", function(entry) {
+					if (/\/$/.test(locationToPlaceUnZippedFiles + entry.fileName)) {
+						// directory file names end with '/'
+						mkdirp(locationToPlaceUnZippedFiles + entry.fileName, function(err) {
+							if (err) throw err;
+							zipfile.readEntry();
+						});
+					} else {
+						// file entry
+						zipfile.openReadStream(entry, function(err, readStream) {
+							if (err) throw err;
+							// ensure parent directory exists
+							mkdirp(locationToPlaceUnZippedFiles + path.dirname(entry.fileName), function(err) {
+								if (err) throw err;
+								readStream.pipe(fs.createWriteStream(locationToPlaceUnZippedFiles + entry.fileName));
+								readStream.on("end", function() {
+									zipfile.readEntry();
+								});
+							});
+						});
+					}
+				});
+			});
+		}
+	</script>
 
 </html>
