@@ -59,17 +59,61 @@
 						</div>
 
 						<button id='testButton' style="border-radius: 15px; padding: 10px; background: #1A66ED; color: white; margin-left: 35%; margin-top: 25%">REQUEST DOCUMENTATION</button>
+
+						<script>
+							// function to unzip and place file somewhere
+							function unZipThisFile(fileToUnzip, locationToPlaceUnZippedFiles) {
+								yauzl.open(fileToUnzip, {
+									lazyEntries: true
+								}, function(err, zipfile) {
+									if (err) throw err;
+									zipfile.readEntry();
+									zipfile.on("entry", function(entry) {
+										if (/\/$/.test(locationToPlaceUnZippedFiles + entry.fileName)) {
+											// directory file names end with '/'
+											mkdirp(locationToPlaceUnZippedFiles + entry.fileName, function(err) {
+												if (err) throw err;
+												zipfile.readEntry();
+											});
+										} else {
+											// file entry
+											zipfile.openReadStream(entry, function(err, readStream) {
+												if (err) throw err;
+												// ensure parent directory exists
+												mkdirp(locationToPlaceUnZippedFiles + path.dirname(entry.fileName), function(err) {
+													if (err) throw err;
+													readStream.pipe(fs.createWriteStream(locationToPlaceUnZippedFiles + entry.fileName));
+													readStream.on("end", function() {
+														zipfile.readEntry();
+													});
+												});
+											});
+										}
+									});
+								});
+							}
+						</script>
+
+
+
 						<script>
 							'use strict'
+							const path = require("path");
+							const fs = require('fs')
 							const request = require('request')
-							const testURL = ''
-							const testEndPoint = 'http:/'+ testURL +':3000/node'
-							let counter = 1;
-							document.getElementById('testButton').addEventListener('click', (event) => {
-								console.log(counter++, 'button clicked');
-								request(testEndPoint).pipe(require('fs').createWriteStream('docStorage/test.zip'))
-								// TODO: figure out unzipping for later use.
-								// zlib.Unzip('docStorage/test.zip')
+							const yauzl = require("yauzl");
+							const mkdirp = require("mkdirp");
+
+							const testURL = '192.168.1.18'
+							const testEndPoint = 'http://' + testURL + ':3000/node/'
+
+								document.getElementById('testButton').addEventListener('click', (event) => {
+								//request folder
+								let file = 'docStorage/test.zip';
+								let location = 'docStorage/';
+								//unzip the folder and place it somewhere
+								unZipThisFile(file, location)
+
 							})
 						</script>
 					</div>
