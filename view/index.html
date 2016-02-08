@@ -20,10 +20,10 @@
 							<nav class="nav-group">
 								<!-- nav-group-title -->
 								<h5 class="nav-group-title">Favorites</h5>
-								<span class="nav-group-item">
+								<span class="nav-group-item active">
                   <span class="icon icon-right-dir"></span> Node
 								</span>
-								<span class="nav-group-item active">
+								<span class="nav-group-item">
                   <span class="icon icon-right-dir"></span> CSS3
 								</span>
 								<span class="nav-group-item">
@@ -52,11 +52,12 @@
 							</div>
 						</div>
 
-						<iframe src="http://www.google.com" name="targetframe" allowTransparency="true" scrolling="no" frameborder="0" >
+						<iframe src="../docStorage/node.docs/documents/cluster.html" name="targetframe" height="100%" width="100%">
     				</iframe>
 
 
-						<!-- <button id='testButton' style="border-radius: 15px; padding: 10px; background: #1A66ED; color: white; margin-left: 35%; margin-top: 25%">REQUEST DOCUMENTATION</button> -->
+						<!-- <button id='request' style="border-radius: 15px; padding: 10px; background: #1A66ED; color: white; margin-left: 35%; margin-top: 25%">REQUEST </button>
+						<button id='unzip' style="border-radius: 15px; padding: 10px; background: #1A66ED; color: white; margin-left: 35%; margin-top: 25%">UNZIP</button> -->
 
 					</div>
 				</div>
@@ -82,9 +83,14 @@
 		const testURL = '192.168.1.18'
 		const testEndPoint = 'http://' + testURL + ':3000/node/'
 
-		document.getElementById('testButton').addEventListener('click', (event) => {
-			//request folder
-			let file = 'docStorage/test.zip';
+		document.getElementById('request').addEventListener('click', (event) => {
+			console.log('start request');
+			request(testEndPoint).pipe(fs.createWriteStream('docStorage/node.zip'))
+		})
+
+		document.getElementById('unzip').addEventListener('click', (event) => {
+			console.log('starting unzipping');
+			let file = 'docStorage/node.zip';
 			let location = 'docStorage/';
 			//unzip the folder and place it somewhere
 			unZipThisFile(file, location)

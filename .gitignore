@@ -9,3 +9,6 @@ Doc-tor-darwin-x64
 
 # front-end build
 build
+
+# node.docs folder containing node.zip unzipped
+docStorage/node.docs
