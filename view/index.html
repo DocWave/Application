@@ -3,7 +3,6 @@
 	<head>
 		<title>Doc-tor</title>
 		<link rel="stylesheet" href="css/photon.css">
-		<link rel="stylesheet" href="css/normalize.css">
 	</head>
 
 	<body>
@@ -16,31 +15,40 @@
 					<div class="pane pane-sm sidebar">
 						<ul class="list-group">
 							<li class="list-group-header">
-								<input class="form-control" type="text" placeholder="Search for documentation">
+								<input class="form-control" type="text" placeholder="Search Documentation">
+
 							</li>
 							<nav class="nav-group">
-								<!-- toolbar mixin from https://github.com/connors/photon/issues/14 -->
-								<!-- <label class="toolbar-input">
-								<span class="icon icon-search"></span>
-								<input type="search" class="form-control" placeholder="Search...">
-							</label> -->
 								<!-- nav-group-title -->
 								<h5 class="nav-group-title">Favorites</h5>
-								<span class="nav-group-item">
-                  <span class="icon icon-home"></span> Node
-								</span>
-								<span class="nav-group-item active">
-                  <span class="icon icon-light-up"></span> CSS3
-								</span>
-								<span class="nav-group-item">
-                  <span class="icon icon-download"></span> HTML5
-								</span>
+								<div id="node_all">
+									<span id="node_arrow" class="nav-group-item active">
+	                  <span class="icon icon-down-dir"></span> Node
+									</span>
+									<ul id="node_items">
+										<li class="node_doc" data='../docStorage/node.docs/documents/assert.html' style="margin-left: 20px">Assert</li>
+										<li class="node_doc" data='../docStorage/node.docs/documents/cluster.html' style="margin-left: 20px">Cluster</li>
+										<li class="node_doc" data='../docStorage/node.docs/documents/fs.html' style="margin-left: 20px">File System</li>
+										<li class="node_doc" data='../docStorage/node.docs/documents/buffer.html' style="margin-left: 20px">Buffer</li>
+										<li class="node_doc" data='../docStorage/node.docs/documents/console.html' style="margin-left: 20px">Console</li>
+										<li class="node_doc" data='../docStorage/node.docs/documents/dns.html' style="margin-left: 20px">DNS</li>
+									</ul>
+								</div>
 							</nav>
+
+
+
 							<nav class="nav-group">
 								<!-- nav-group-title -->
 								<h5 class="nav-group-title">Downloadable</h5>
 								<span class="nav-group-item">
-                  <span class="icon icon-home"></span> Electron
+                  <span class="icon icon-right-dir"></span> Electron
+								</span>
+								<span class="nav-group-item">
+                  <span class="icon icon-right-dir"></span> CSS3
+								</span>
+								<span class="nav-group-item">
+                  <span class="icon icon-right-dir"></span> HTML5
 								</span>
 							</nav>
 					</div>
@@ -48,15 +56,25 @@
 					<div class="pane">
 						<div class="tab-group">
 							<div class="tab-item active">
-								<span class="icon icon-cancel icon-close-tab"></span> Node
+								<span class="icon icon-cancel icon-close-tab"></span> Cluster
 							</div>
 							<div class="tab-item">
-								<span class="icon icon-cancel icon-close-tab"></span> CSS3
-							</div>
-							<div class="tab-item tab-item-fixed">
-								<span class="icon icon-plus"></span>
+								<span class="icon icon-cancel icon-close-tab"></span> FS
 							</div>
 						</div>
+						<iframe
+							id="doc_frame"
+							src="../docStorage/node.docs/documents/cluster.html"
+							height="100%"
+							width="100%"
+							frameborder=0
+							seamless="seamless">
+						</iframe>
+
+						<!-- test buttons for requesting zip file and unzipping it locally -->
+						<!-- <button id='request' style="border-radius: 15px; padding: 10px; background: #1A66ED; color: white; margin-left: 35%; margin-top: 25%">REQUEST </button>
+						<button id='unzip' style="border-radius: 15px; padding: 10px; background: #1A66ED; color: white; margin-left: 35%; margin-top: 25%">UNZIP</button> -->
+
 					</div>
 				</div>
 			</div>
@@ -69,5 +87,5 @@
 		</div>
 	</body>
 	<!-- <script src="build/bundle.js"></script> -->
-
+	<script src="view.js"></script>
 </html>

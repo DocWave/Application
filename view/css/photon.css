@@ -564,39 +564,6 @@ h6 {
   margin-right: 4px;
 }
 
-
-/*  START OF:   */
-
-.toolbar-input {
-  position: relative;
-  overflow: visible;
-  margin: 0;
-  padding: 0;
-}
-
-.toolbar-input .icon {
-  position: absolute;
-  left: 10px;
-  top: 4px;
-  z-index: 1;
-  opacity: 0.5;
-  /* ~matches placeholder */
-}
-
-.toolbar-input .form-control {
-  padding: 3px 4px 1px 24px;
-  border-radius: 12px;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4), 0 0 0 7px rgba(109, 179, 253, 0);
-}
-
-.toolbar-input .form-control:focus {
-  /* something like this was already in place: */
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(109, 179, 253, 0.8);
-  transition: box-shadow 250ms ease-out;
-}
-
-/*  END OF:        */
-
 label {
   display: inline-block;
   font-size: 13px;
@@ -789,7 +756,7 @@ img {
   height: 18px;
   float: left;
   color: #737475;
-  margin-top: -3px;
+  margin-top: 2px;
   margin-right: 7px;
   font-size: 18px;
   text-align: center;
