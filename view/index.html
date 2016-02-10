@@ -15,13 +15,33 @@
 					<div class="pane pane-sm sidebar">
 						<ul class="list-group">
 							<li class="list-group-header">
-								<input class="form-control" type="text" placeholder="Search documentation">
+								<input class="form-control" type="text" placeholder="Search Documentation">
 							</li>
 							<nav class="nav-group">
 								<!-- nav-group-title -->
 								<h5 class="nav-group-title">Favorites</h5>
-								<span class="nav-group-item active">
-                  <span class="icon icon-right-dir"></span> Node
+								<div id="node_all">
+									<span id="node_arrow" class="nav-group-item active">
+	                  <span class="icon icon-down-dir"></span> Node
+									</span>
+									<ul id="node_items">
+										<li class="node_doc" data='../docStorage/node.docs/documents/assert.html' style="margin-left: 20px">Assert</li>
+										<li class="node_doc" data='../docStorage/node.docs/documents/cluster.html' style="margin-left: 20px">Cluster</li>
+										<li class="node_doc" data='../docStorage/node.docs/documents/fs.html' style="margin-left: 20px">File System</li>
+										<li class="node_doc" data='../docStorage/node.docs/documents/buffer.html' style="margin-left: 20px">Buffer</li>
+										<li class="node_doc" data='../docStorage/node.docs/documents/console.html' style="margin-left: 20px">Console</li>
+										<li class="node_doc" data='../docStorage/node.docs/documents/dns.html' style="margin-left: 20px">DNS</li>
+									</ul>
+								</div>
+							</nav>
+
+
+
+							<nav class="nav-group">
+								<!-- nav-group-title -->
+								<h5 class="nav-group-title">Downloadable</h5>
+								<span class="nav-group-item">
+                  <span class="icon icon-right-dir"></span> Electron
 								</span>
 								<span class="nav-group-item">
                   <span class="icon icon-right-dir"></span> CSS3
@@ -30,32 +50,28 @@
                   <span class="icon icon-right-dir"></span> HTML5
 								</span>
 							</nav>
-							<nav class="nav-group">
-								<!-- nav-group-title -->
-								<h5 class="nav-group-title">Downloadable</h5>
-								<span class="nav-group-item">
-                  <span class="icon icon-down-dir"></span> Electron
-								</span>
-							</nav>
 					</div>
 
 					<div class="pane">
 						<div class="tab-group">
 							<div class="tab-item active">
-								<span class="icon icon-cancel icon-close-tab"></span> Node
+								<span class="icon icon-cancel icon-close-tab"></span> Cluster
 							</div>
 							<div class="tab-item">
-								<span class="icon icon-cancel icon-close-tab"></span> CSS3
-							</div>
-							<div class="tab-item tab-item-fixed">
-								<span class="icon icon-plus"></span>
+								<span class="icon icon-cancel icon-close-tab"></span> FS
 							</div>
 						</div>
 
-						<iframe src="../docStorage/node.docs/documents/cluster.html" name="targetframe" height="100%" width="100%">
-    				</iframe>
+						<iframe
+							id="doc_frame"
+							src="../docStorage/node.docs/documents/cluster.html"
+							height="100%"
+							width="100%"
+							frameborder=0
+							seamless="seamless">
+						</iframe>
 
-
+						<!-- test buttons for requesting zip file and unzipping it locally -->
 						<!-- <button id='request' style="border-radius: 15px; padding: 10px; background: #1A66ED; color: white; margin-left: 35%; margin-top: 25%">REQUEST </button>
 						<button id='unzip' style="border-radius: 15px; padding: 10px; background: #1A66ED; color: white; margin-left: 35%; margin-top: 25%">UNZIP</button> -->
 
@@ -71,62 +87,5 @@
 		</div>
 	</body>
 	<!-- <script src="build/bundle.js"></script> -->
-
-	<script>
-		'use strict'
-		const path = require("path");
-		const fs = require('fs')
-		const request = require('request')
-		const yauzl = require("yauzl");
-		const mkdirp = require("mkdirp");
-
-		const testURL = '192.168.1.18'
-		const testEndPoint = 'http://' + testURL + ':3000/node/'
-
-		document.getElementById('request').addEventListener('click', (event) => {
-			console.log('start request');
-			request(testEndPoint).pipe(fs.createWriteStream('docStorage/node.zip'))
-		})
-
-		document.getElementById('unzip').addEventListener('click', (event) => {
-			console.log('starting unzipping');
-			let file = 'docStorage/node.zip';
-			let location = 'docStorage/';
-			//unzip the folder and place it somewhere
-			unZipThisFile(file, location)
-		})
-
-		// function to unzip and place file somewhere
-		function unZipThisFile(fileToUnzip, locationToPlaceUnZippedFiles) {
-			yauzl.open(fileToUnzip, {
-				lazyEntries: true
-			}, function(err, zipfile) {
-				if (err) throw err;
-				zipfile.readEntry();
-				zipfile.on("entry", function(entry) {
-					if (/\/$/.test(locationToPlaceUnZippedFiles + entry.fileName)) {
-						// directory file names end with '/'
-						mkdirp(locationToPlaceUnZippedFiles + entry.fileName, function(err) {
-							if (err) throw err;
-							zipfile.readEntry();
-						});
-					} else {
-						// file entry
-						zipfile.openReadStream(entry, function(err, readStream) {
-							if (err) throw err;
-							// ensure parent directory exists
-							mkdirp(locationToPlaceUnZippedFiles + path.dirname(entry.fileName), function(err) {
-								if (err) throw err;
-								readStream.pipe(fs.createWriteStream(locationToPlaceUnZippedFiles + entry.fileName));
-								readStream.on("end", function() {
-									zipfile.readEntry();
-								});
-							});
-						});
-					}
-				});
-			});
-		}
-	</script>
-
+	<script src="view.js"></script>
 </html>

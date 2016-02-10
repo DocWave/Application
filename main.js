@@ -1,43 +1,72 @@
 'use strict';
 
-const electron = require('electron');
-// Module to control application life.
-const app = electron.app;
-// Module to create native browser window.
-const BrowserWindow = electron.BrowserWindow;
-const menu = require('electron').Menu;
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
+// ************
+// DEPENDENCIES
+// ************
+
+const electron 						= require('electron');
+const app 								= electron.app;
+const BrowserWindow 			= electron.BrowserWindow;
+const menu 								= electron.Menu;
 let mainWindow;
 
-function createWindow() {
-	// Create the browser window.
+// ***************
+// CRASH REPORTING
+// ***************
 
-	let windowOptions = {
-		width: 800,
-		height: 600,
-		"node-integration": "iframe", // and this line
+const crashReporter 			= require('electron').crashReporter;
+crashReporter.start({
+  productName: 'Doc-tor',
+  companyName: 'DocWave',
+  submitURL: 'http://192.168.1.57:3000/error',
+  autoSubmit: true
+});
+
+// ***************************
+// APPLICATION EVENT LISTENERS
+// ***************************
+
+// once electron has booted up, createWindow
+app.on('ready', createWindow);
+
+// Quit when all windows are closed.
+app.on('window-all-closed', function() {
+	if (process.platform !== 'darwin') {
+		app.quit();
 	}
+});
+// if theres no window, and the app icon is clicked => createWindow()
+app.on('activate', function() {
+	if (mainWindow === null) {
+		createWindow();
+	}
+});
 
-	mainWindow = new BrowserWindow(windowOptions);
+// *****************
+// HELPER FUNCTIONS
+// *****************
 
-	// and load the index.html of the app.
+// creates the view window for desktop application
+function createWindow() {
+	mainWindow = new BrowserWindow({
+		width: 800,
+		minWidth: 800,
+		height: 600,
+		minHeight: 600,
+		"node-integration": "iframe",
+	});
+
 	mainWindow.loadURL('file://' + __dirname + '/view/index.html');
-
-	// Open the DevTools.
 	mainWindow.webContents.openDevTools();
 
-	// Emitted when the window is closed.
 	mainWindow.on('closed', function() {
-		// Dereference the window object, usually you would store windows
-		// in an array if your app supports multi windows, this is the time
-		// when you should delete the corresponding element.
 		mainWindow = null;
 	});
-	initMenu();
+	initMenu()
 }
 
-///Menu
+// initialize a menu in top-left of desktop
+//		-- included in createWindow() fn
 function initMenu() {
 	var Menu = require("menu");
 	var template = [{
@@ -99,24 +128,3 @@ function initMenu() {
 	];
 	Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 }
-
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-app.on('ready', createWindow);
-
-// Quit when all windows are closed.
-app.on('window-all-closed', function() {
-	// On OS X it is common for applications and their menu bar
-	// to stay active until the user quits explicitly with Cmd + Q
-	if (process.platform !== 'darwin') {
-		app.quit();
-	}
-});
-
-app.on('activate', function() {
-	// On OS X it's common to re-create a window in the app when the
-	// dock icon is clicked and there are no other windows open.
-	if (mainWindow === null) {
-		createWindow();
-	}
-});
