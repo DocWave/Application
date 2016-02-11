@@ -23,7 +23,7 @@ var sqlparser = {
 
           nodeColArr.forEach(elem => getObj(elem));
           // console.log( result);
-          return result;
+          return {"result": result, "sections": nodeColArr};
         }
 }
 module.exports = sqlparser;
