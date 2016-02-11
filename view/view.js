@@ -4,6 +4,7 @@
 	const request = require('request')
 	const yauzl 	= require("yauzl")
 	const mkdirp 	= require("mkdirp")
+	const parseDB   = require('./components/parseDB')
 	const $ 			= require('jquery')
 	require('jquery-ui')
 
@@ -26,7 +27,21 @@ $('.node_doc').click(function(e) {
 		doc_frame.src = $(this).attr('data')
 })
 
-
+$(document).ready(function(){
+	// var objects = parseDB.parse();
+	// $("#node_items").empty()
+	var $newEl = $('<li class="node_doc" data="" style="margin-left: 25px"></li>')
+	// console.log(obj.NAME)
+	$("#node_items").append($newEl.text("BOOOOS").attr('data', '../docStorage/node.docs/documents/fs.html'))
+	$("#node_items").append('<li class="node_doc" data="../docStorage/node.docs/documents/fs.html" style="margin-left: 25px">File System</li>')
+	// $('#node_items')
+	// for(var obj of objects){
+	// 	var $newEl = $('<li class="node_doc" data="" style="margin-left: 25px"></li>')
+	// 	// console.log(obj.NAME)
+	// 	$("#node_items").append($newEl.text(obj.NAME).attr('data', '../docStorage/node.docs/documents/'+obj.LINK))
+	// }
+	// console.log(objects)
+})
 
 
 
