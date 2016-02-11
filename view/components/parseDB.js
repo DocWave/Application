@@ -1,6 +1,7 @@
 'use strict'
 let fs = require('fs');
 let SQL = require('sql.js');
+
 let filebuffer = fs.readFileSync('docStorage/node.docs/documents.sqlite');
 
 var sqlparser = {
