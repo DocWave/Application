@@ -8,4 +8,4 @@ DocWave-darwin-x64
 build
 
 # unzipped node.zip
-docStorage/node.docs
+# docStorage/node.docs

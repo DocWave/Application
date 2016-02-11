@@ -1,7 +1,7 @@
 'use strict'
 let fs = require('fs');
 let SQL = require('sql.js');
-let filebuffer = fs.readFileSync('/Users/Fox/Documents/Programming/Doc-tor/docStorage/node.docs/documents.sqlite');
+let filebuffer = fs.readFileSync('../../docStorage/node.docs/documents.sqlite');
 
 // Load the db
 let db = new SQL.Database(filebuffer);

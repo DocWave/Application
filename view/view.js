@@ -7,32 +7,53 @@
 	const $ 			= require('jquery')
 	require('jquery-ui')
 
+	//document's iframe
 	let doc_frame = $('#doc_frame')[0]
+	// parent element storing tabs
 	let tab_group = $('.tab-group')
 
+	// helper function to switch iframe url
 	function switchFrame(url) {
 		doc_frame.src = url;
 	}
 
+
+// new tab constructor, takes nameOfTab & link.
+// sidebar click => new tab => updated iframe view
+	let newTab = (nameOfTab, link) => $(`<div class="tab-item" data='${link}'><span class="icon icon-cancel icon-close-tab"></span> ${nameOfTab}</div>`)
+
+
+$('#node_items').children().hide();
+
+// toggle the arrow for sidebar parent, rotates arrow
 	$('#node_arrow').click(function(e) {
 		$('#node_items').children().toggle();
+		$(this).children().first().toggleClass("icon icon-right-dir icon icon-down-dir");
 	})
 
-$('.icon-cancel').click(function(e) {
-	$(this).parent().hide()
-})
+
+// $('.icon-cancel').click(function(e) {
+// 	$(this).parent().remove()
+// 	doc_frame.src = $(tab_group).last().attr('data')
+// })
 
 $('.node_doc').click(function(e) {
-		doc_frame.src = $(this).attr('data')
+		//when you click on a sidebar item, append a new tab and set the iframe to the source
+		$(tab_group).append(newTab($(this).text(), $(this).attr('data')))
+		switchFrame($(this).attr('data'))
+
+		// make sure new tabs are hide-able
+		$('.icon-cancel').click(function(e) {
+			$(this).parent().remove()
+			switchFrame($('.tab-item').last().attr('data'))
+		})
 })
 
-
-
-
-
+// *****************************************************************************
+// *****************************************************************************
+// *****************************************************************************
 
 	// BELOW USED FOR API TESTING
-
 
 	// const testEndPoint = 'http://' + '192.168.1.18' + ':3000/node/'
 	// let requestButton = $('#request')[0]
