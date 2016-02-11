@@ -8,7 +8,7 @@
 	require('jquery-ui')
 
 	let doc_frame = $('#doc_frame')[0]
-	let tabs = $('.tab-item')
+	let tab_group = $('.tab-group')
 
 	function switchFrame(url) {
 		doc_frame.src = url;
@@ -25,10 +25,6 @@ $('.icon-cancel').click(function(e) {
 $('.node_doc').click(function(e) {
 		doc_frame.src = $(this).attr('data')
 })
-
-
-
-
 
 
 

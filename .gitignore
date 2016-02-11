@@ -1,14 +1,11 @@
 # npm dependencies
-node_modules/*
-
-#include edited version of website_scraper
-#!node_modules/website-scraper
+node_modules
 
 # packaged application (end-user)
-Doc-tor-darwin-x64
+DocWave-darwin-x64
 
 # front-end build
 build
 
-# node.docs folder containing node.zip unzipped
+# unzipped node.zip
 docStorage/node.docs
