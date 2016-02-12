@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lfox91/Doc-tor"
+    "url": "git+https://github.com/DocWave/Doc-tor"
   },
   "keywords": [
     "Documentation",
@@ -19,9 +19,9 @@
   "author": "Dan Levin, Cruz Welborn, Lea Fox",
   "license": "CC0-1.0",
   "bugs": {
-    "url": "https://github.com/lfox91/Doc-tor/issues"
+    "url": "https://github.com/DocWave/Doc-tor/issues"
   },
-  "homepage": "https://github.com/lfox91/Doc-tor#readme",
+  "homepage": "https://github.com/DocWave/Doc-tor#readme",
   "dependencies": {
     "jquery": "^2.2.0",
     "jquery-ui": "^1.10.5",
@@ -47,5 +47,8 @@
     "request": "^2.69.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.2.2"
+  },
+  "engines": {
+    "node": "5.4.1"
   }
 }
