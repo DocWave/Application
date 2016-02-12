@@ -49,8 +49,8 @@ app.on('activate', function() {
 // creates the view window for desktop application
 function createWindow() {
 	mainWindow = new BrowserWindow({
-		width: 800,
-		minWidth: 800,
+		width: 900,
+		minWidth: 900,
 		height: 600,
 		minHeight: 600,
 		"node-integration": "iframe",
@@ -122,6 +122,11 @@ function initMenu() {
 					label: "Select All",
 					accelerator: "CmdOrCtrl+A",
 					selector: "selectAll:"
+				},
+        {
+					label: "Find",
+					accelerator: "Cmd+F",
+					selector: "find:"
 				}
 	    ]
 		}
