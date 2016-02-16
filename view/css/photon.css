@@ -2266,6 +2266,7 @@ td:last-child {
   display: flex;
   border-top: 1px solid #989698;
   border-bottom: 1px solid #989698;
+  position: fixed;
 }
 
 .tab-item {

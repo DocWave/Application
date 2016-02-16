@@ -1,6 +1,6 @@
 # npm dependencies
 node_modules
-docStorage
+# docStorage
 
 # packaged application (end-user)
 DocWave-darwin-x64
