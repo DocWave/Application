@@ -1,135 +1,51 @@
 'use strict';
 
-// ************
-// DEPENDENCIES
-// ************
+const electron = require('electron');
+// Module to control application life.
+const app = electron.app;
+// Module to create native browser window.
+const BrowserWindow = electron.BrowserWindow;
 
-const electron 						= require('electron');
-const app 								= electron.app;
-const BrowserWindow 			= electron.BrowserWindow;
-const menu 								= electron.Menu;
+// Keep a global reference of the window object, if you don't, the window will
+// be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
-// ***************
-// CRASH REPORTING
-// ***************
+function createWindow () {
+  // Create the browser window.
+  mainWindow = new BrowserWindow({width: 800, height: 600});
 
-const crashReporter 			= require('electron').crashReporter;
-crashReporter.start({
-  productName: 'Doc-tor',
-  companyName: 'DocWave',
-  submitURL: 'http://192.168.1.57:3000/error',
-  autoSubmit: true
-});
+  // and load the index.html of the app.
+  mainWindow.loadURL('file://' + __dirname + '/app/index.html');
 
-// ***************************
-// APPLICATION EVENT LISTENERS
-// ***************************
+  // Open the DevTools.
+  mainWindow.webContents.openDevTools();
 
-// once electron has booted up, createWindow
+  // Emitted when the window is closed.
+  mainWindow.on('closed', function() {
+    // Dereference the window object, usually you would store windows
+    // in an array if your app supports multi windows, this is the time
+    // when you should delete the corresponding element.
+    mainWindow = null;
+  });
+}
+
+// This method will be called when Electron has finished
+// initialization and is ready to create browser windows.
 app.on('ready', createWindow);
 
 // Quit when all windows are closed.
-app.on('window-all-closed', function() {
-	if (process.platform !== 'darwin') {
-		app.quit();
-	}
-});
-// if theres no window, and the app icon is clicked => createWindow()
-app.on('activate', function() {
-	if (mainWindow === null) {
-		createWindow();
-	}
+app.on('window-all-closed', function () {
+  // On OS X it is common for applications and their menu bar
+  // to stay active until the user quits explicitly with Cmd + Q
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
 });
 
-// *****************
-// HELPER FUNCTIONS
-// *****************
-
-// creates the view window for desktop application
-function createWindow() {
-	mainWindow = new BrowserWindow({
-		width: 900,
-		minWidth: 900,
-		height: 600,
-		minHeight: 600,
-		"node-integration": "iframe",
-	});
-
-	mainWindow.loadURL('file://' + __dirname + '/view/index.html');
-	mainWindow.webContents.openDevTools();
-
-	mainWindow.on('closed', function() {
-		mainWindow = null;
-	});
-	initMenu()
-}
-
-// initialize a menu in top-left of desktop
-//		-- included in createWindow() fn
-function initMenu() {
-	var Menu = require("menu");
-	var template = [{
-			label: "Application",
-			submenu: [
-				{
-					label: "Doc-tor",
-					selector: "orderFrontStandardAboutPanel:"
-				},
-				{
-					type: "separator"
-				},
-				{
-					label: "Quit",
-					accelerator: "Command+Q",
-					click: function() {
-						app.quit();
-					}
-				}
-	    ]
-		}, {
-			label: "Edit",
-			submenu: [
-				{
-					label: "Undo",
-					accelerator: "CmdOrCtrl+Z",
-					selector: "undo:"
-				},
-				{
-					label: "Redo",
-					accelerator: "Shift+CmdOrCtrl+Z",
-					selector: "redo:"
-				},
-				{
-					type: "separator"
-				},
-				{
-					label: "Cut",
-					accelerator: "CmdOrCtrl+X",
-					selector: "cut:"
-				},
-				{
-					label: "Copy",
-					accelerator: "CmdOrCtrl+C",
-					selector: "copy:"
-				},
-				{
-					label: "Paste",
-					accelerator: "CmdOrCtrl+V",
-					selector: "paste:"
-				},
-				{
-					label: "Select All",
-					accelerator: "CmdOrCtrl+A",
-					selector: "selectAll:"
-				},
-        {
-					label: "Find",
-					accelerator: "Cmd+F",
-					selector: "find:"
-				}
-	    ]
-		}
-	];
-	Menu.setApplicationMenu(Menu.buildFromTemplate(template));
-}
+app.on('activate', function () {
+  // On OS X it's common to re-create a window in the app when the
+  // dock icon is clicked and there are no other windows open.
+  if (mainWindow === null) {
+    createWindow();
+  }
+});

@@ -1,6 +1,12 @@
 # npm dependencies
+
 node_modules
+<<<<<<< HEAD
 # docStorage
+=======
+
+docStorage
+>>>>>>> reactDesktop
 
 # packaged application (end-user)
 DocWave-darwin-x64
@@ -9,4 +15,10 @@ DocWave-darwin-x64
 build
 
 # unzipped node.zip
-# docStorage/node.docs
+ docStorage/node.docs
+
+
+bower_components
+
+
+build/
