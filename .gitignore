@@ -1,12 +1,8 @@
 # npm dependencies
 
 node_modules
-<<<<<<< HEAD
-# docStorage
-=======
 
 docStorage
->>>>>>> reactDesktop
 
 # packaged application (end-user)
 DocWave-darwin-x64
