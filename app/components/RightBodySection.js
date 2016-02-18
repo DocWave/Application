@@ -11,8 +11,12 @@ module.exports = React.createClass({
     return (
         <div id="rightBody" style={{'width': this.props.rightBodyWidth, 'float':'right'}}>
 						<Navigation toggleSideBar={this.props.toggleSideBar}/>
-						<Tabbing currentTab={this.props.currentTab} switchTab={this.props.switchTab}/>
-		        <Frame/>
+						<Tabbing
+                  currentTab={this.props.currentTab}
+                    switchTab={this.props.switchTab}
+                    currentTabs={this.props.currentTabs}
+            />
+		        <Frame currentFrame={this.props.currentFrame}/>
 				</div>
 			)
 		}

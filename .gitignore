@@ -1,9 +1,8 @@
 # npm dependencies
-
 node_modules
 
-
-docStorage
+# stored documents
+ docStorage
 
 # packaged application (end-user)
 DocWave-darwin-x64
@@ -11,11 +10,5 @@ DocWave-darwin-x64
 # front-end build
 build
 
-# unzipped node.zip
- docStorage/node.docs
-
-
+# bower
 bower_components
-
-
-build/
