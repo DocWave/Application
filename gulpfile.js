@@ -17,10 +17,10 @@ function handleErrors() {
 
 function buildScript(file, watch) {
   var props = {
-    entries : ['./view/components/' + file],
+    entries : ['./app/components/' + file],
     debug : true,
     transform : babelify.configure({
-                presets: ["react", "es2015", "stage-0"]
+                presets: ["react", "es2015"]
                 })
   };
 
@@ -31,8 +31,8 @@ function buildScript(file, watch) {
     var stream = bundler.bundle();
     return stream
       .on('error', handleErrors)
-      .pipe(source('./bundle.js'))
-      .pipe(gulp.dest('./view/build/'));
+      .pipe(source('bundle.js'))
+      .pipe(gulp.dest('./app/build/'));
   }
 
   bundler.on('update', function() {
@@ -49,6 +49,7 @@ function buildScript(file, watch) {
 gulp.task('scripts', function() {
   return buildScript('App.js', false);
 });
+
 
 // run 'scripts' task first, then watch for future changes
 gulp.task('default', ['scripts'], function() {
