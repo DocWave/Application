@@ -1,9 +1,9 @@
 import React from 'react';
 
 // child components
-import Frame from './Frame' //iframe
-import Navigation from './Navigation'
-import Tabbing from './Tabbing'
+import Frame from './Frame'; //iframe
+import Navigation from './Navigation';
+import Tabbing from './Tabbing';
 
 
 module.exports = React.createClass({

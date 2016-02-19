@@ -49,3 +49,15 @@ app.on('activate', function () {
     createWindow();
   }
 });
+
+
+
+
+// BELOW IS SQL PARSING LOGIC, TEMPORARY TESTING
+const sqlparser = require('./mainHelpers/parseDB');
+const ipcMain = require('electron').ipcMain;
+
+ipcMain.on('dbparse', function(event, arg) {
+  console.log('ipcMain on channel dbparse received:', arg);
+  event.sender.send('dbparse', sqlparser.parse());
+});

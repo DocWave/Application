@@ -50,3 +50,6 @@ var sqlparser = {
 }
 module.exports = sqlparser;
 // parseSQL(nodeColArr);
+
+
+console.log(sqlparser.parse());

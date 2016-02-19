@@ -6,6 +6,8 @@ import RightBodySection from './RightBodySection';
 
 import Tab from 'material-ui/lib/tabs/tab';
 
+
+
 var App = React.createClass({
   getInitialState: function() {
     var that = this;
@@ -35,7 +37,7 @@ var App = React.createClass({
   },
   handleToggle: function() {
     // this function is for toggling the sidebar, wherever that may be needed
-    let newWidth, newIcon;
+    let newWidth;
     (this.state.rightBodyWidth === '80%') ? newWidth = '100%' : newWidth = '80%';
     this.setState({open: !this.state.open, rightBodyWidth: newWidth})
   },
