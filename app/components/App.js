@@ -5,8 +5,10 @@ import LeftNavSection from './LeftNavSection';
 import RightBodySection from './RightBodySection';
 
 import Tab from 'material-ui/lib/tabs/tab';
-
-
+import ActionFlightTakeoff from 'material-ui/lib/svg-icons/action/flight-takeoff';
+import OffIcon from 'material-ui/lib/svg-icons/content/clear';
+import IconButton from 'material-ui/lib/icon-button';
+import FloatingActionButton from 'material-ui/lib/floating-action-button';
 
 var App = React.createClass({
   getInitialState: function() {
@@ -17,11 +19,31 @@ var App = React.createClass({
       currentFrame: 'welcome.html',
       currentTab: 'a',
       currentTabs: [
-        <Tab label={'leaTab'} value={'a'} onClick={ function() {
+        <Tab
+      icon={<OffIcon onClick={function() {alert('woo')}} />}
+      label="-1" value={'-1'} style={{ zIndex: 10000 }}
+      onClick={ function() {
+      return that.switchTab('-1') } } />,
+        <Tab
+          icon={<OffIcon />}
+          label={'leaTab'}
+          value={'a'}
+          inkBarStyle={{backgroundColor:"#FFC107", color:'#000'}}
+          onClick={ function() {
           return that.switchTab('a') } } />,
-        <Tab label={'cruzTab'} value={'b'} onClick={ function() {
+        <Tab
+          icon={<OffIcon />}
+          label={'cruzTab'}
+          value={'b'}
+          inkBarStyle={{backgroundColor:"#FFC107", color:'#000'}}
+          onClick={ function() {
           return that.switchTab('b') } } />,
-        <Tab label={'danTab'} value={'c'} onClick={ function() {
+        <Tab
+          icon={<OffIcon />}
+          label={'danTab'}
+          value={'c'}
+          inkBarStyle={{backgroundColor:"#FFC107", color:'#000'}}
+          onClick={ function() {
           return that.switchTab('c') } } />]
     }
   },
