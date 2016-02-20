@@ -10,6 +10,12 @@ import OffIcon from 'material-ui/lib/svg-icons/content/clear';
 import IconButton from 'material-ui/lib/icon-button';
 import FloatingActionButton from 'material-ui/lib/floating-action-button';
 
+// needed for button clicks to work functionally
+//  https://github.com/callemall/material-ui/issues/1011
+import injectTapEventPlugin from "react-tap-event-plugin"
+injectTapEventPlugin();
+
+
 var App = React.createClass({
   getInitialState: function() {
     var that = this;
@@ -18,13 +24,7 @@ var App = React.createClass({
       rightBodyWidth: '80%',
       currentFrame: 'welcome.html',
       currentTab: 'a',
-      currentTabs: [
-        <Tab
-      icon={<OffIcon onClick={function() {alert('woo')}} />}
-      label="-1" value={'-1'} style={{ zIndex: 10000 }}
-      onClick={ function() {
-      return that.switchTab('-1') } } />,
-        <Tab
+      currentTabs: [ <Tab
           icon={<OffIcon />}
           label={'leaTab'}
           value={'a'}
