@@ -26,21 +26,21 @@ var App = React.createClass({
       currentTab: 'a',
       currentTabs: [ <Tab
           icon={<OffIcon />}
-          label={'leaTab'}
+          label={'Cluster'}
           value={'a'}
           inkBarStyle={{backgroundColor:"#FFC107", color:'#000'}}
           onClick={ function() {
           return that.switchTab('a') } } />,
         <Tab
           icon={<OffIcon />}
-          label={'cruzTab'}
+          label={'File System'}
           value={'b'}
           inkBarStyle={{backgroundColor:"#FFC107", color:'#000'}}
           onClick={ function() {
           return that.switchTab('b') } } />,
         <Tab
           icon={<OffIcon />}
-          label={'danTab'}
+          label={'Crypto'}
           value={'c'}
           inkBarStyle={{backgroundColor:"#FFC107", color:'#000'}}
           onClick={ function() {
