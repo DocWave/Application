@@ -6,7 +6,7 @@
   "scripts": {
     "start": "electron .",
     "task": "gulp",
-    "package": "electron-packager . DocWave --platform=darwin --arch=x64 --version=0.36.4 --overwrite --prune"
+    "package": "electron-packager . DocWave --platform=darwin --arch=x64 --version=0.36.7 --overwrite --prune --icon=icons/DocWave1.icns"
   },
   "repository": {
     "type": "git",

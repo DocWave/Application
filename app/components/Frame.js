@@ -9,7 +9,7 @@ module.exports = React.createClass({
 			<div>
 			<iframe
 					id="doc_frame"
-					src={this.state.currentView}
+					src={this.props.currentFrame}
 					height="85%"
 					width="100%"
 					style={{'float': 'right'}}
