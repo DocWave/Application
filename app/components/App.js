@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import Colors from 'material-ui/lib/styles/colors';
+
 import LeftNavSection from './LeftNavSection';
 import RightBodySection from './RightBodySection';
 
@@ -23,39 +25,7 @@ var App = React.createClass({
       open: true,
       rightBodyWidth: '80%',
       currentFrame: 'welcome.html',
-      currentTab: 'a',
-      currentTabs: [ <Tab
-          icon={<OffIcon />}
-          label={'Cluster'}
-          value={'a'}
-          inkBarStyle={{backgroundColor:"#FFC107", color:'#000'}}
-          onClick={ function() {
-          return that.switchTab('a') } } />,
-        <Tab
-          icon={<OffIcon />}
-          label={'File System'}
-          value={'b'}
-          inkBarStyle={{backgroundColor:"#FFC107", color:'#000'}}
-          onClick={ function() {
-          return that.switchTab('b') } } />,
-        <Tab
-          icon={<OffIcon />}
-          label={'Crypto'}
-          value={'c'}
-          inkBarStyle={{backgroundColor:"#FFC107", color:'#000'}}
-          onClick={ function() {
-          return that.switchTab('c') } } />]
     }
-  },
-  switchTab: function(newTab) {
-    // this function is for changing tabs
-    this.setState({ currentTab: newTab })
-  },
-  createTab: function(label, value) {
-    var currArray = this.state.currentTabs
-    currArray.push(<Tab label={label} value={value} onClick={ function() {
-      return that.switchTab(value) } } />)
-    this.setState({ currentTabs: currArray })
   },
   handleToggle: function() {
     // this function is for toggling the sidebar, wherever that may be needed
@@ -63,17 +33,18 @@ var App = React.createClass({
     (this.state.rightBodyWidth === '80%') ? newWidth = '100%' : newWidth = '80%';
     this.setState({open: !this.state.open, rightBodyWidth: newWidth})
   },
+  switchFrame: function(newFrame) {
+    console.log('youre trying to switch frame', newFrame);
+    this.setState({currentFrame: newFrame})
+  },
   render: function () {
     return (
       <div id="App">
-        <LeftNavSection open={this.state.open}/>
+        <LeftNavSection open={this.state.open} switchFrame={this.switchFrame}/>
         <RightBodySection
-            switchTab={this.switchTab}
             rightBodyWidth={this.state.rightBodyWidth}
-            currentTab={this.state.currentTab}
             toggleSideBar={this.handleToggle}
             currentFrame={this.state.currentFrame}
-            currentTabs={this.state.currentTabs}
             />
       </div>
     )

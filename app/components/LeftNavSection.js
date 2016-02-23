@@ -22,7 +22,6 @@ import ContentSend from 'material-ui/lib/svg-icons/content/send';
 import FolderClosed from 'material-ui/lib/svg-icons/file/folder';
 import Checkbox from 'material-ui/lib/checkbox';
 
-
 module.exports = React.createClass({
   getInitialState: function() {
     //sending request to main.js to parse out the SQL-lite file
@@ -36,31 +35,31 @@ module.exports = React.createClass({
     return { nodeChildren: [] }
   },
   populateNode: function(node_titles) {
+    var that = this;
     //reduce the function into nodeChildren: { section: [ [{TYPE, NAME, LINK}, etc.]], nextSection: []}
     var newHierarchy = node_titles.result.reduce(function(sections, current) {
       if (!sections[current.TYPE]) sections[current.TYPE] = [];
       sections[current.TYPE].push(current)
       return sections
     }, {})
-    // console.log(newHierarchy); //pseudo-test: Works!
-
     var listItemsArray = []
     var i = 0;
-    // for each section
     for (var key in newHierarchy) {
       //push a new list item that has all the sections as children
       listItemsArray.push(
         <ListItem
+              switchFrame = {this.props.switchFrame}
               key={i++}
               primaryText={key}
               initiallyOpen={false}
+              primaryTogglesNestedList={true}
               nestedItems={newHierarchy[key].map(function(curr, j) {
                 return  <ListItem
                     key={j}
                     primaryText={curr.NAME}
-                    NAME={curr.NAME}
-                    LINK={curr.LINK}
-                    TYPE={curr.TYPE}
+                    onClick={function() {
+                      that.props.switchFrame(`docStorage/node.docs/documents/${curr.LINK}`)
+                    }}
                   />
               })}
             />
@@ -70,7 +69,8 @@ module.exports = React.createClass({
   },
   render: function () {
     return (
-        <LeftNav open={this.props.open}>
+        <LeftNav open={this.props.open}
+          switchFrame={this.props.switchFrame} >
               <AutoComplete
                 floatingLabelText={"Documentation"}
                 filter={AutoComplete.fuzzyFilter}
@@ -83,6 +83,7 @@ module.exports = React.createClass({
                   initiallyOpen={false}
                   primaryTogglesNestedList={true}
                   nestedItems={this.state.nodeChildren}
+                  switchFrame={this.props.switchFrame}
                 />
             </List>
             <Divider />
@@ -90,20 +91,3 @@ module.exports = React.createClass({
 			)
 		}
 	})
-
-
-// I dont think we're gonna use these, keepin the syntax just in case though
-// function formerMenuButtons () {
-//   return (
-//     <div>
-//         <MenuItem onClick={this.switchView}>HTML<Badge badgeContent={32} secondary={true}
-//         badgeStyle={{top: 18, right: 0}} ></Badge></MenuItem>
-//         <MenuItem onClick={this.switchView}>CSS<Badge badgeContent={27} secondary={true}
-//         badgeStyle={{top: 18, right: 0}} ></Badge></MenuItem>
-//         <MenuItem onClick={this.switchView}>JS<Badge badgeContent={45} secondary={true}
-//         badgeStyle={{top: 18, right: 0}} ></Badge></MenuItem>
-//         <MenuItem onClick={this.switchView}>Node<Badge badgeContent={24} secondary={true}
-//         badgeStyle={{top: 18, right: 0}} ></Badge></MenuItem>
-//     </div>
-//   )
-// }
