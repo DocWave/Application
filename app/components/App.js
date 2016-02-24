@@ -17,8 +17,10 @@ import FloatingActionButton from 'material-ui/lib/floating-action-button';
 import injectTapEventPlugin from "react-tap-event-plugin"
 injectTapEventPlugin();
 
+
 var App = React.createClass({
   getInitialState: function() {
+    var that = this;
     return {
       open: true,
       rightBodyWidth: '80%',

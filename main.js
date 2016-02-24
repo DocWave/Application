@@ -4,10 +4,7 @@ const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 const Menu = electron.Menu;
 const ipcMain = electron.ipcMain;
-
-// requiring in sqlParser is leading to production troubles
-// let sqlparser = require('./mainHelpers/parseDB.js');
-// let sqlparser = require('./penisberg');
+const fs = require('fs')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -15,10 +12,11 @@ let mainWindow;
 
 function createWindow() {
 	// BELOW IS SQL PARSING LOGIC, TEMPORARY TESTING
-	// ipcMain.on('dbparse', function(event, arg) {
-	// 	let node_data = sqlparser.parse();
-	// 	event.sender.send('dbparse', node_data);
-	// });
+	ipcMain.on('dbparse', function(event, arg) {
+		let node_data = JSON.parse(fs.readFileSync(__dirname + '/app/components/docStorage/node.docs/index.json'))
+		console.log(node_data.result);
+		event.sender.send('dbparse', node_data.result);
+	});
 
 	// Create the browser window.
 	let windowOptions = {

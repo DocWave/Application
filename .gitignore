@@ -4,7 +4,7 @@ node_modules/*
 !node_modules/material-ui/*
 
 # stored documents
-docStorage
+ docStorage
 
 # packaged application (end-user)
 DocWave-darwin-x64
