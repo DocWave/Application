@@ -1,13 +1,13 @@
 # npm dependencies
 node_modules/*
 
-!node_modules/material-ui/*
-
 # stored documents
  docStorage
 
 # packaged application (end-user)
 DocWave-darwin-x64
+DocWave-linux-x64
+DocWave-darwin-x64-ZIP-+-DMG
 
 # front-end build
 build

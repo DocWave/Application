@@ -25,50 +25,23 @@ import Checkbox from 'material-ui/lib/checkbox';
 import fs from 'fs';
 
 module.exports = React.createClass({
-  getInitialState: function() {
-    //sending request to main.js to parse out the SQL-lite file
-    ipcRenderer.send('dbparse')
-    ipcRenderer.on('dbparse', (event, arg) => {
-      // when the parsed data comes back, let's pass it into the populateNode fn
-      console.log(arg);
-      this.populateNode(arg)
-    });
-    // our initial state is empty
-    return { nodeChildren: [] }
-  },
-  populateNode: function(node_titles) {
-    var that = this;
-    // //reduce the function into nodeChildren: { section: [ [{TYPE, NAME, LINK}, etc.]], nextSection: []}
-    var newHierarchy = node_titles.reduce(function(sections, current) {
-      if (!sections[current.TYPE]) sections[current.TYPE] = [];
-      sections[current.TYPE].push(current)
-      return sections
-    }, {})
-    console.log(newHierarchy);
-    var listItemsArray = []
-    var i = 0;
-    for (var key in newHierarchy) {
-      //push a new list item that has all the sections as children
-      listItemsArray.push(
-        <ListItem
-              switchFrame = {this.props.switchFrame}
-              key={i++}
+  generateDocSets: function() {
+    'use strict';
+      var docSets = [], counter = 0;
+      for (let key in this.props.currentDownloads) {
+        docSets.push(
+          <ListItem
+              key={counter++}
               primaryText={key}
+              leftIcon={<ActionGrade />}
               initiallyOpen={false}
               primaryTogglesNestedList={true}
-              nestedItems={newHierarchy[key].map(function(curr, j) {
-                return  <ListItem
-                    key={j}
-                    primaryText={curr.NAME}
-                    onClick={function() {
-                      that.props.switchFrame(`docStorage/node.docs/documents/${curr.LINK}`)
-                    }}
-                  />
-              })}
+              nestedItems={this.props.currentDownloads[key]}
+              switchFrame={this.props.switchFrame}
             />
-      )
-    }
-    this.setState({ nodeChildren: listItemsArray })
+        )
+      }
+      return docSets
   },
   render: function () {
     return (
@@ -80,14 +53,7 @@ module.exports = React.createClass({
                 dataSource={['Dan', 'Lea', 'Cruz']}
               />
 						<List subheader="Downloaded">
-              <ListItem
-                  primaryText="NodeJS"
-                  leftIcon={<ActionGrade />}
-                  initiallyOpen={false}
-                  primaryTogglesNestedList={true}
-                  nestedItems={this.state.nodeChildren}
-                  switchFrame={this.props.switchFrame}
-                />
+              {this.generateDocSets()}
             </List>
             <Divider />
         </LeftNav>

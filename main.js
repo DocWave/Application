@@ -12,10 +12,16 @@ let mainWindow;
 
 function createWindow() {
 	// BELOW IS SQL PARSING LOGIC, TEMPORARY TESTING
-	ipcMain.on('dbparse', function(event, arg) {
-		let node_data = JSON.parse(fs.readFileSync(__dirname + '/app/components/docStorage/node.docs/index.json'))
-		console.log(node_data.result);
-		event.sender.send('dbparse', node_data.result);
+	ipcMain.on('reqDocset', function(event, arg) {
+		console.log(arg);
+		if (arg === 'node') {
+			let node_data = JSON.parse(fs.readFileSync(__dirname + '/app/docStorage/node.docs/index.json'))
+			event.sender.send('reqDocset', ['node', node_data.result]);
+		}
+		if (arg === 'express') {
+			let express_data = JSON.parse(fs.readFileSync(__dirname + '/app/docStorage/express.docs/index.json'))
+			event.sender.send('reqDocset', ['express', express_data.result]);
+		}
 	});
 
 	// Create the browser window.
@@ -34,7 +40,7 @@ function createWindow() {
 	mainWindow.loadURL('file://' + __dirname + '/app/index.html');
 
 	// Open the DevTools.
-	mainWindow.webContents.openDevTools();
+	//mainWindow.webContents.openDevTools();
 
 	// Emitted when the window is closed.
 	mainWindow.on('closed', function() {
