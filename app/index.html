@@ -4,11 +4,11 @@
     <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
     <style>h1 { font-family: 'Lobster', cursive }</style>
   </head>
-  <body>
+  <body style="-webkit-app-region: drag">
     <div id="main-container"></div>
     <script>
       var electronRequire = require;
-      const ipcRenderer = electronRequire('electron').ipcRenderer;
+      var ipcRenderer = electronRequire('electron').ipcRenderer;
     </script>
     <script src="build/bundle.js"></script>
   </body>

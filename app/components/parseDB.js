@@ -2,9 +2,10 @@ module.exports = {
 		//Parse will return an array containing the objects that make our sidebar
 		parse: function() {
 			'use strict'
-			let fs = require('fs');
-			let SQL = require('sql.js');
-			let filebuffer = fs.readFile('../app/docStorage/node.docs/documents.sqlite');
+			let fs = electronRequire('fs');
+			let SQL = electronRequire('sql.js');
+			let path = require('path');
+			let filebuffer = fs.readFile('docStorage/node.docs/documents.sqlite');
 			//Create instance of db
 			let db = new SQL.Database(filebuffer);
 

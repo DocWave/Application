@@ -1,5 +1,5 @@
 import React from 'react';
-
+// NOTE: consider switching from iFrame to an electron webview
 module.exports = React.createClass({
 	render: function() {
 		return (
