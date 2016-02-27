@@ -9,12 +9,18 @@
 			}
 		</style>
 	</head>
+	<script>
+		var options = {
+			body: 'JS, Node & Express are currently downloading...'
+		}
+		new Notification('Thanks for downloading DocWave!', options)
+	</script>
 
 	<body style="-webkit-app-region: drag">
 		<div id="main-container"></div>
 		<script>
 			var electronRequire = require;
-			var ipcRenderer = electronRequire('electron').ipcRenderer;
+			var ipcRenderer = require('electron').ipcRenderer;
 		</script>
 		<script src="build/bundle.js"></script>
 		<script>
@@ -36,7 +42,7 @@
 				'storage': 'none',
 				'clientId': localStorage.getItem(GA_LOCAL_STORAGE_KEY)
 			});
-      ga('set', 'location', 'https://docwave.io/appstats');
+			ga('set', 'location', 'https://docwave.io/');
 			ga(function(tracker) {
 				localStorage.setItem(GA_LOCAL_STORAGE_KEY, tracker.get('clientId'));
 			});

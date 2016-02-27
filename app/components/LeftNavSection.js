@@ -46,17 +46,31 @@ module.exports = React.createClass({
   render: function () {
     return (
         <LeftNav open={this.props.open}
-          switchFrame={this.props.switchFrame} >
-              <AutoComplete
-                floatingLabelText={"Documentation"}
-                filter={AutoComplete.fuzzyFilter}
-                dataSource={['Dan', 'Lea', 'Cruz']}
-              />
+          switchFrame={this.props.switchFrame}
+          liveUpdateLinks={this.props.liveUpdateLinks} >
+
+          <AutoComplete
+            floatingLabelText={"Search Documentation"}
+            filter={AutoComplete.fuzzyFilter}
+            dataSource={this.props.liveUpdateNames}
+            onNewRequest={(name, index, dataSource) => {
+              this.props.switchFrame(this.props.liveUpdateLinks[index]);
+            }}
+          />
+
+
 						<List subheader="Downloaded">
               {this.generateDocSets()}
             </List>
+
             <Divider />
         </LeftNav>
 			)
 		}
 	})
+
+
+
+  // filterUpdate: function(test1, test2) {
+  //   console.log('hiiiii hey', this)
+  // },

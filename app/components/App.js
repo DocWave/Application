@@ -12,23 +12,35 @@ injectTapEventPlugin();
 
 
 var App = React.createClass({
+  requestDocSet: function(docSet) {
+    ipcRenderer.send('reqDocset', docSet)
+  },
   getInitialState: function() {
-    ipcRenderer.send('reqDocset', 'node')
-    ipcRenderer.send('reqDocset', 'express')
+    //this.requestDocSet('mdn_javascript')
+
     ipcRenderer.on('reqDocset', (event, arg) => {
       console.log('ipcRenderer', arg);
-      if (arg[0] === 'node') this.populate(arg[1], 'node')
-      if (arg[0] === 'express') this.populate(arg[1], 'express')
+      if (arg[1] === typeof 'string') {
+        // error-handling below is currently not working, will investigate later
+        console.log('error:! ', arg[1])
+      } else {
+        this.populate(arg[1], arg[0])
+      }
     });
     return {
       open: true,
       rightBodyWidth: '80%',
       currentFrame: 'welcome.html',
-      currentDownloads: {}
+      currentDownloads: {},
+      liveUpdateNames: [],
+      liveUpdateLinks: [],
     }
   },
+  componentDidMount: function() {
+    // test requests for docSets
+    this.requestDocSet('node')
+  },
   populate: function(newDocSet, nameOfNewDocSet) {
-    console.log('populat 1st line: ', newDocSet);
     var that = this;
     //reduce the function into nodeChildren: { section: [ [{TYPE, NAME, LINK}, etc.]], nextSection: []}
     var newHierarchy = newDocSet.reduce(function(sections, current) {
@@ -38,7 +50,6 @@ var App = React.createClass({
     }, {})
     var listItemsArray = []
     var i = 0;
-    console.log('preHierarchy', listItemsArray)
     for (var key in newHierarchy) {
       //push a new list item that has all the sections as children
       listItemsArray.push(
@@ -49,6 +60,17 @@ var App = React.createClass({
               initiallyOpen={false}
               primaryTogglesNestedList={true}
               nestedItems={newHierarchy[key].map(function(curr, j) {
+                var currNames = that.state.liveUpdateNames;
+                var currLinks = that.state.liveUpdateLinks;
+                currNames.push(curr.NAME)
+                currLinks.push(`docStorage/${nameOfNewDocSet}.docs/documents/${curr.LINK}`)
+                that.setState({
+                  liveUpdateNames: currNames,
+                  liveUpdateLinks: currLinks
+                })
+
+                // fuzzyFilterArray.push(curr.NAME, curr.LINK)
+
                 return  <ListItem
                     key={j}
                     primaryText={curr.NAME}
@@ -60,7 +82,6 @@ var App = React.createClass({
             />
       )
     }
-    console.log('new hierArchy', listItemsArray);
     let newCurrDL = that.state.currentDownloads
     newCurrDL[nameOfNewDocSet] = listItemsArray
     this.setState({ 'currentDownloads': newCurrDL })
@@ -73,7 +94,18 @@ var App = React.createClass({
   },
   switchFrame: function(newFrame) {
     // this function is for switching the webView frame's src property
-    this.setState({currentFrame: newFrame})
+    var currFrame = this.state.currentFrame
+
+    console.log(`switching from ${currFrame} to ${newFrame}`);
+
+    var cI = currFrame.indexOf('#')
+    var nI = newFrame.indexOf('#')
+    // checks if it's still the same page
+    if (currFrame.slice(0, cI) === newFrame.slice(0, nI)) {
+      this.setState({currentFrame: newFrame})
+    } else {
+      this.setState({currentFrame: newFrame})
+    }
   },
   render: function () {
     return (
@@ -82,11 +114,14 @@ var App = React.createClass({
           open={this.state.open}
           switchFrame={this.switchFrame}
           currentDownloads={this.state.currentDownloads}
+          liveUpdateNames={this.state.liveUpdateNames}
+          liveUpdateLinks={this.state.liveUpdateLinks}
            />
         <RightBodySection
             rightBodyWidth={this.state.rightBodyWidth}
             toggleSideBar={this.handleToggle}
             currentFrame={this.state.currentFrame}
+            switchFrame={this.switchFrame}
             />
       </div>
     )
