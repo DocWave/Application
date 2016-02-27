@@ -6,8 +6,8 @@
   "scripts": {
     "start": "electron .",
     "task": "gulp",
-    "package-mac": "electron-packager . DocWave --platform=darwin --arch=x64 --version=0.36.8 --overwrite --prune --icon=icons/DocWave1.icns --app-version=1.0.0",
-    "package-linux": "electron-packager . DocWave --platform=linux --arch=x64 --version=0.36.8 --overwrite --prune --icon=icons/DocWave1.icns --app-version=1.0.0"
+    "package-mac": "electron-packager . DocWave --platform=darwin --arch=x64 --version=0.36.8 --overwrite --prune --icon=icons/DocWave1.icns",
+    "package-linux": "electron-packager . DocWave --platform=linux --arch=x64 --version=0.36.8  --overwrite --prune --icon=icons/DocWave1.icns"
   },
   "repository": {
     "type": "git",
@@ -25,16 +25,18 @@
   },
   "homepage": "https://github.com/DocWave/Doc-tor#readme",
   "devDependencies": {
-    "electron-prebuilt": "^0.36.8",
-    "electron-packager": "^5.2.1",
-    "watchify": "^3.2.2",
     "babel-preset-es2015": "^6.0.15",
     "babel-preset-react": "^6.0.15",
     "babelify": "^7.2.0",
     "browserify": "^10.2.4",
+    "electron-packager": "^5.2.1",
+    "electron-prebuilt": "^0.36.8",
+    "grunt": "^0.4.5",
+    "grunt-electron-installer": "^1.2.2",
     "gulp": "^3.9.0",
     "gulp-notify": "^2.2.0",
-    "vinyl-source-stream": "^1.1.0"
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.2.2"
   },
   "dependencies": {
     "material-ui": "^0.14.4",

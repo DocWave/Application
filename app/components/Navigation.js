@@ -19,14 +19,16 @@ import Gear from 'material-ui/lib/svg-icons/action/settings';
 
 module.exports = React.createClass({
   render: function () {
+    var that = this
     return (
 			<AppBar docked={true} title="DocWave" id="Navigation" style={{'textAlign': 'center', 'color': 'white'}}
+          switchFrame={this.props.switchFrame}
 					iconElementLeft={
             <IconButton onClick={this.props.toggleSideBar}>
               <MenuIcon/>
             </IconButton>}
           iconElementRight={
-              <IconButton onClick={this.props.toggleSideBar}><Gear/></IconButton>
+              <IconButton onClick={function() {that.props.switchFrame('welcome.html')}}><Gear/></IconButton>
             }
 					/>
 			)
