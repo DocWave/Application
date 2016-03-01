@@ -6,6 +6,7 @@
   "scripts": {
     "start": "electron .",
     "task": "gulp",
+    "uglify": "uglifyjs app/build/bundle.js > app/build/bundle.min.js",
     "package-mac": "electron-packager . DocWave --platform=darwin --arch=x64 --version=0.36.8 --overwrite --prune --icon=icons/DocWave1.icns",
     "package-linux": "electron-packager . DocWave --platform=linux --arch=x64 --version=0.36.8  --overwrite --prune --icon=icons/DocWave1.icns"
   },

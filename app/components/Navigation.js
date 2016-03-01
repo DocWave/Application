@@ -8,18 +8,12 @@ import IconButton from 'material-ui/lib/icon-button';
 
 // Icons
 import MenuIcon from 'material-ui/lib/svg-icons/navigation/menu';
-import MoreHoriz from 'material-ui/lib/svg-icons/navigation/more-horiz';
-import MoreVert from 'material-ui/lib/svg-icons/navigation/more-vert';
-import CacheIcon from 'material-ui/lib/svg-icons/action/cached';
-import ReaderIcon from 'material-ui/lib/svg-icons/action/chrome-reader-mode';
-import WifiOff from 'material-ui/lib/svg-icons/device/signal-wifi-off';
-import WifiOn from 'material-ui/lib/svg-icons/notification/wifi';
 import Gear from 'material-ui/lib/svg-icons/action/settings';
 
 
 module.exports = React.createClass({
   render: function () {
-    var that = this
+    let that = this
     return (
 			<AppBar docked={true} title="DocWave" id="Navigation" style={{'textAlign': 'center', 'color': 'white'}}
           switchFrame={this.props.switchFrame}
@@ -28,7 +22,7 @@ module.exports = React.createClass({
               <MenuIcon/>
             </IconButton>}
           iconElementRight={
-              <IconButton onClick={function() {that.props.switchFrame('welcome.html')}}><Gear/></IconButton>
+              <IconButton onClick={function() {that.props.switchFrame('settings.html')}}><Gear/></IconButton>
             }
 					/>
 			)
