@@ -43,49 +43,55 @@ function createWindow() {
 
 	ipcMain.on('reqDocset', (event, arg) => {
 		console.log(arg);
+		let data = JSON.parse(fs.readFileSync(__dirname + `/app/docStorage/${arg}.docs/index.json`))
+		event.sender.send('reqDocset', [arg, data.result]);
 
-		try {
-			fs.statSync('app/docStorage/'+arg+'.docs');
-			fs.readdir('app/docStorage/'+arg+'.docs', (err, data) => {
-				// throw(err)
-				// if (err) console.log('right under readdir in try ',err)
-				// if file exists => readFile
-					console.log('file exists!!');
-					fs.readFile(__dirname + '/app/docStorage/'+arg+'.docs/index.json', (err, data) => {
-						console.log('file exists!!', err, data);
-						if (err) {event.sender.send('reqDocset', [arg, 'An error occured while trying to grab ' + arg]) }
-						else { event.sender.send('reqDocset', [arg, JSON.parse(data).result]) }
-					})
-				}) //end of no error and data exists
+	// 	if (arg === 'node') {
+	// 		let node_data = JSON.parse(fs.readFileSync(__dirname + '/app/docStorage/node.docs/index.json'))
+	// 		event.sender.send('reqDocset', ['node', node_data.result]);
+	// 	}
+	// 	if (arg === 'express') {
+	// 		let express_data = JSON.parse(fs.readFileSync(__dirname + '/app/docStorage/express.docs/index.json'))
+	// 		event.sender.send('reqDocset', ['express', express_data.result]);
+	// 	}
+	});
 
-		}
-		catch(e) {
-			console.log('querying docs from API');
-			getDocsFromServer(endPoints[arg], 'app/docStorage/' + arg + '.docs/', () => {
-				console.log('attempting unzipping');
-				unZipThisFile('app/docStorage/'+arg+'.zip', 'app/docStorage/', () => {
-					console.log('unzipping succesful, reading new directory');
-					fs.readFile(__dirname + '/app/docStorage/'+arg+'.docs/index.json', (err, data) => {
-						if (err) {event.sender.send('reqDocset', [arg, 'An error occured while trying to grab '+arg ])}
-						else {
-							event.sender.send('reqDocset', [arg, JSON.parse(data).result])
-						}
-					})
-				})//end of unZipThisFile
-			}) //end of getDocsFromServer
-		}
-
-
-
-
-
-
+		// try {
+		// 	fs.statSync('app/docStorage/'+arg+'.docs');
+		// 	fs.readdir('app/docStorage/'+arg+'.docs', (err, data) => {
+		// 		// throw(err)
+		// 		// if (err) console.log('right under readdir in try ',err)
+		// 		// if file exists => readFile
+		// 			console.log('file exists!!');
+		// 			fs.readFile(__dirname + '/app/docStorage/'+arg+'.docs/index.json', (err, data) => {
+		// 				console.log('file exists!!', err, data);
+		// 				if (err) {event.sender.send('reqDocset', [arg, 'An error occured while trying to grab ' + arg]) }
+		// 				else { event.sender.send('reqDocset', [arg, JSON.parse(data).result]) }
+		// 			})
+		// 		}) //end of no error and data exists
+		//
+		// }
+		// catch(e) {
+		// 	console.log('querying docs from API');
+		// 	getDocsFromServer(endPoints[arg], 'app/docStorage/' + arg + '.docs/', () => {
+		// 		console.log('attempting unzipping');
+		// 		unZipThisFile('app/docStorage/'+arg+'.zip', 'app/docStorage/', () => {
+		// 			console.log('unzipping succesful, reading new directory');
+		// 			fs.readFile(__dirname + '/app/docStorage/'+arg+'.docs/index.json', (err, data) => {
+		// 				if (err) {event.sender.send('reqDocset', [arg, 'An error occured while trying to grab '+arg ])}
+		// 				else {
+		// 					event.sender.send('reqDocset', [arg, JSON.parse(data).result])
+		// 				}
+		// 			})
+		// 		})//end of unZipThisFile
+		// 	}) //end of getDocsFromServer
+		// }
 
 			// if file doesn't exist => getDocs from server, unzip them, and then read the JSON file to send back.
 			// else {
 			//
 			// } //end of error and no data
-		}) //end of readdir
+		//}) //end of readdir
 
 
 

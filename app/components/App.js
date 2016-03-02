@@ -11,13 +11,12 @@ import injectTapEventPlugin from "react-tap-event-plugin"
 injectTapEventPlugin();
 
 
-var App = React.createClass({
+let App = React.createClass({
   requestDocSet: function(docSet) {
     ipcRenderer.send('reqDocset', docSet)
   },
   getInitialState: function() {
-    //this.requestDocSet('mdn_javascript')
-
+    // when we received our docset, handle errors and then populate sidebar
     ipcRenderer.on('reqDocset', (event, arg) => {
       console.log('ipcRenderer', arg);
       if (arg[1] === typeof 'string') {
@@ -27,6 +26,7 @@ var App = React.createClass({
         this.populate(arg[1], arg[0])
       }
     });
+    // app state: whether the sidebars open, the current docSets, and livesearch arrays
     return {
       open: true,
       rightBodyWidth: '80%',
@@ -39,20 +39,26 @@ var App = React.createClass({
   componentDidMount: function() {
     // test requests for docSets
     this.requestDocSet('node')
+    this.requestDocSet('mdn_javascript')
+    this.requestDocSet('mdn_html')
+    this.requestDocSet('mdn_css')
+    this.requestDocSet('express')
   },
   populate: function(newDocSet, nameOfNewDocSet) {
-    var that = this;
+    let that = this;
     //reduce the function into nodeChildren: { section: [ [{TYPE, NAME, LINK}, etc.]], nextSection: []}
-    var newHierarchy = newDocSet.reduce(function(sections, current) {
+    let newHierarchy = newDocSet.reduce(function(sections, current) {
       if (!sections[current.TYPE]) sections[current.TYPE] = [];
       sections[current.TYPE].push(current)
       return sections
-    }, {})
-    var listItemsArray = []
-    var i = 0;
-    for (var key in newHierarchy) {
+    }, {});
+    let listItemsArray = []
+    let i = 0;
+    let currNames = that.state.liveUpdateNames;
+    let currLinks = that.state.liveUpdateLinks;
+    for (let key in newHierarchy) {
       //push a new list item that has all the sections as children
-      listItemsArray.push(
+      listItemsArray[listItemsArray.length] = (
         <ListItem
               switchFrame = {that.switchFrame}
               key={i++}
@@ -60,17 +66,9 @@ var App = React.createClass({
               initiallyOpen={false}
               primaryTogglesNestedList={true}
               nestedItems={newHierarchy[key].map(function(curr, j) {
-                var currNames = that.state.liveUpdateNames;
-                var currLinks = that.state.liveUpdateLinks;
-                currNames.push(curr.NAME)
-                currLinks.push(`docStorage/${nameOfNewDocSet}.docs/documents/${curr.LINK}`)
-                that.setState({
-                  liveUpdateNames: currNames,
-                  liveUpdateLinks: currLinks
-                })
-
-                // fuzzyFilterArray.push(curr.NAME, curr.LINK)
-
+                // needed for live searching
+                currNames[currNames.length] = curr.NAME
+                currLinks[currLinks.length] = `docStorage/${nameOfNewDocSet}.docs/documents/${curr.LINK}`
                 return  <ListItem
                     key={j}
                     primaryText={curr.NAME}
@@ -84,7 +82,10 @@ var App = React.createClass({
     }
     let newCurrDL = that.state.currentDownloads
     newCurrDL[nameOfNewDocSet] = listItemsArray
-    this.setState({ 'currentDownloads': newCurrDL })
+    this.setState({
+      currentDownloads: newCurrDL,
+      liveUpdateNames: currNames,
+      liveUpdateLinks: currLinks })
   },
   handleToggle: function() {
     // this function is for toggling the sidebar, wherever that may be needed
@@ -94,12 +95,10 @@ var App = React.createClass({
   },
   switchFrame: function(newFrame) {
     // this function is for switching the webView frame's src property
-    var currFrame = this.state.currentFrame
-
+    let currFrame = this.state.currentFrame
     console.log(`switching from ${currFrame} to ${newFrame}`);
-
-    var cI = currFrame.indexOf('#')
-    var nI = newFrame.indexOf('#')
+    let cI = currFrame.indexOf('#')
+    let nI = newFrame.indexOf('#')
     // checks if it's still the same page
     if (currFrame.slice(0, cI) === newFrame.slice(0, nI)) {
       this.setState({currentFrame: newFrame})
