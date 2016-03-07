@@ -5,8 +5,12 @@ node_modules/*
 docStorage
 
 # packaged application (end-user)
-DocWave-darwin-x64
-DocWave-linux-x64
+DocWave-OSX-x64.dmg
+DocWave-OSX-x64/
+DocWave-OSX-x64.zip
+DocWave-OSX.dmg
+DocWave-Linux-x64.zip
+DocWave-linux-x64/
 DocWave-darwin-x64-ZIP-+-DMG
 
 # front-end build
