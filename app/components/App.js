@@ -16,6 +16,12 @@ let App = React.createClass({
     ipcRenderer.send('reqDocset', docSet)
   },
   getInitialState: function() {
+    // test requests for docSets
+    this.requestDocSet('node')
+    this.requestDocSet('mdn_javascript')
+    this.requestDocSet('mdn_html')
+    this.requestDocSet('mdn_css')
+    this.requestDocSet('express')
     // when we received our docset, handle errors and then populate sidebar
     ipcRenderer.on('reqDocset', (event, arg) => {
       console.log('ipcRenderer', arg);
@@ -36,50 +42,70 @@ let App = React.createClass({
       liveUpdateLinks: [],
     }
   },
-  componentDidMount: function() {
-    // test requests for docSets
-    this.requestDocSet('node')
-    this.requestDocSet('mdn_javascript')
-    this.requestDocSet('mdn_html')
-    this.requestDocSet('mdn_css')
-    this.requestDocSet('express')
-  },
   populate: function(newDocSet, nameOfNewDocSet) {
     let that = this;
     //reduce the function into nodeChildren: { section: [ [{TYPE, NAME, LINK}, etc.]], nextSection: []}
     let newHierarchy = newDocSet.reduce(function(sections, current) {
       if (!sections[current.TYPE]) sections[current.TYPE] = [];
-      sections[current.TYPE].push(current)
+      sections[current.TYPE][sections[current.TYPE].length] = current
       return sections
     }, {});
     let listItemsArray = []
     let i = 0;
     let currNames = that.state.liveUpdateNames;
     let currLinks = that.state.liveUpdateLinks;
-    for (let key in newHierarchy) {
-      //push a new list item that has all the sections as children
-      listItemsArray[listItemsArray.length] = (
-        <ListItem
-              switchFrame = {that.switchFrame}
-              key={i++}
-              primaryText={key}
-              initiallyOpen={false}
-              primaryTogglesNestedList={true}
-              nestedItems={newHierarchy[key].map(function(curr, j) {
-                // needed for live searching
-                currNames[currNames.length] = curr.NAME
-                currLinks[currLinks.length] = `docStorage/${nameOfNewDocSet}.docs/documents/${curr.LINK}`
-                return  <ListItem
-                    key={j}
-                    primaryText={curr.NAME}
-                    onClick={function() {
-                      that.switchFrame(`docStorage/${nameOfNewDocSet}.docs/documents/${curr.LINK}`)
-                    }}
-                  />
-              })}
-            />
-      )
-    }
+    //console.log(Object.keys(newHierarchy)); //Classes, Elements, etc..
+    let arrayOfSections = Object.keys(newHierarchy);
+
+    for (var s = 0; s < arrayOfSections.length; s++) {
+        //push a new list item that has all the sections as children
+        listItemsArray[listItemsArray.length] = (
+          <ListItem
+                switchFrame = {that.switchFrame}
+                key={i++}
+                primaryText={arrayOfSections[s]}
+                initiallyOpen={false}
+                primaryTogglesNestedList={true}
+                nestedItems={newHierarchy[arrayOfSections[s]].map(function(curr, j) {
+                  // needed for live searching
+                  currNames[currNames.length] = curr.NAME
+                  currLinks[currLinks.length] = `docStorage/${nameOfNewDocSet}.docs/documents/${curr.LINK}`
+                  return  <ListItem
+                      key={j}
+                      primaryText={curr.NAME}
+                      onClick={function() {
+                        that.switchFrame(`docStorage/${nameOfNewDocSet}.docs/documents/${curr.LINK}`)
+                      }}
+                    />
+                })}
+              />
+        )
+      }
+
+    // for (let key in newHierarchy) {
+    //   //push a new list item that has all the sections as children
+    //   listItemsArray[listItemsArray.length] = (
+    //     <ListItem
+    //           switchFrame = {that.switchFrame}
+    //           key={i++}
+    //           primaryText={key}
+    //           initiallyOpen={false}
+    //           primaryTogglesNestedList={true}
+    //           nestedItems={newHierarchy[key].map(function(curr, j) {
+    //             // needed for live searching
+    //             currNames[currNames.length] = curr.NAME
+    //             currLinks[currLinks.length] = `docStorage/${nameOfNewDocSet}.docs/documents/${curr.LINK}`
+    //             return  <ListItem
+    //                 key={j}
+    //                 primaryText={curr.NAME}
+    //                 onClick={function() {
+    //                   that.switchFrame(`docStorage/${nameOfNewDocSet}.docs/documents/${curr.LINK}`)
+    //                 }}
+    //               />
+    //           })}
+    //         />
+    //   )
+    // }
     let newCurrDL = that.state.currentDownloads
     newCurrDL[nameOfNewDocSet] = listItemsArray
     this.setState({
